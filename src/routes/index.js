@@ -94,5 +94,6 @@ router.get("/api/articles", articleController.listAll);
 router.post("/api/articles", authenticate, articleController.createOne);
 router.get("/api/articles/:slug", articleController.listOne);
 router.put("/api/articles/:id", authenticate, articleController.updateOne);
+router.delete("/api/articles/:id", authenticate, articleController.deleteOne);
 
 export default router;

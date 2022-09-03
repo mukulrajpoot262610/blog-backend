@@ -35,7 +35,7 @@ class ArticleController {
         try {
             const { id: articleId } = req.params;
             const { _id } = req.user;
-            const { title, content, cover, slug } = req.body;
+            const { title, content, cover, slug, subtitle } = req.body;
             if (!slug) {
                 return APIResponse.validationError("slug can't be empty");
             }
@@ -44,6 +44,7 @@ class ArticleController {
                 {
                     title,
                     content,
+                    subtitle,
                     cover,
                     slug,
                     author: _id,
@@ -60,13 +61,12 @@ class ArticleController {
     async createOne(req, res) {
         try {
             const { _id } = req.user;
-            const { title, content, cover, slug } = req.body;
+            const { title, content, cover, slug, subtitle } = req.body;
             if (!slug) {
                 return APIResponse.validationError(res, "slug can't be empty");
             }
-            const article = await ArticleModel.find({ slug });
-            console.log({ article });
-            if (article.length) {
+            const article = await ArticleModel.findOne({ slug });
+            if (article) {
                 return APIResponse.validationError(res, "slug already in use");
             }
             const createdArticle = await ArticleModel.create({
@@ -74,6 +74,7 @@ class ArticleController {
                 content,
                 cover,
                 slug,
+                subtitle,
                 author: _id,
             });
 
@@ -81,6 +82,25 @@ class ArticleController {
                 res,
                 createdArticle,
                 "article created"
+            );
+        } catch (err) {
+            console.log(err);
+            return APIResponse.errorResponse(res);
+        }
+    }
+
+    async deleteOne(req, res) {
+        try {
+            const { id } = req.params;
+            const article = await ArticleModel.findById({ _id: id });
+            if (!article) {
+                return APIResponse.notFoundResponse(res, "article not found");
+            }
+            const data = await ArticleModel.findByIdAndDelete({ _id: id });
+            return APIResponse.successResponseWithData(
+                res,
+                data,
+                "article deleted"
             );
         } catch (err) {
             console.log(err);

@@ -11,6 +11,7 @@ const articleSchema = new mongoose.Schema(
         title: { type: String },
         content: { type: String },
         cover: { type: String },
+        subtitle: { type: String },
     },
     {
         timestamps: true,
