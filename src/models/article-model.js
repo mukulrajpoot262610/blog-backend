@@ -7,6 +7,7 @@ const articleSchema = new mongoose.Schema(
             ref: "User",
             required: true,
         },
+        slug: { type: String, unique: true },
         title: { type: String },
         content: { type: String },
         cover: { type: String },

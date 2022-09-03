@@ -1,5 +1,6 @@
 import { Router } from "express";
 import adminController from "../controllers/adminController";
+import articleController from "../controllers/articleController";
 import authController from "../controllers/auth-controller";
 import profileController from "../controllers/profile-controller";
 import verifyEmailController from "../controllers/verify-email-controller";
@@ -87,5 +88,11 @@ router.put(
     authenticate,
     profileController.update
 );
+
+// ARTICLE
+router.get("/api/articles", articleController.listAll);
+router.post("/api/articles", authenticate, articleController.createOne);
+router.get("/api/articles/:slug", articleController.listOne);
+router.put("/api/articles/:id", authenticate, articleController.updateOne);
 
 export default router;

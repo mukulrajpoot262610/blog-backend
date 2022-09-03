@@ -14,6 +14,7 @@ const PORT = process.env.PORT || 5000;
 
 const corsOption = {
     credentials: true,
+    origin: ["http://localhost:3000", "http://localhost:4000"],
 };
 
 app.set("views", path.join(__dirname, "views"));
