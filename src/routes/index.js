@@ -96,4 +96,10 @@ router.get("/api/articles/:slug", articleController.listOne);
 router.put("/api/articles/:id", authenticate, articleController.updateOne);
 router.delete("/api/articles/:id", authenticate, articleController.deleteOne);
 
+// PROFILE
+
+router.get("/api/profile", authenticate, profileController.getMyProfile);
+router.get("/api/profile/:id", profileController.getProfile);
+router.put("/api/profile", profileController.update);
+
 export default router;

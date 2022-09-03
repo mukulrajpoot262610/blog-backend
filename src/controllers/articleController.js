@@ -23,6 +23,7 @@ class ArticleController {
             const { slug } = req.params;
             const data = await ArticleModel.findOne({ slug })
                 .limit(20)
+                .populate("author")
                 .sort("-createdAt");
             return APIResponse.successResponseWithData(res, data, "success");
         } catch (err) {

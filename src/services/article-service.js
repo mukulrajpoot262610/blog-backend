@@ -2,7 +2,7 @@ import ArticleModel from "../models/article-model";
 
 class ArticleService {
     async addOne(data) {
-        return ArticleModel.create(data);
+        return ArticleModel.find(data).lean();
     }
 
     async updateOne(filter, data) {
