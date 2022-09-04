@@ -81,13 +81,7 @@ router.delete(
 router.post("/api/profile/:id", profileController.getProfile);
 router.post("/api/set-avatar", authController.updateAvatar);
 
-router.put(
-    "/api/profile",
-    profile.update,
-    validate,
-    authenticate,
-    profileController.update
-);
+router.put("/api/profile", authenticate, profileController.update);
 
 // ARTICLE
 router.get("/api/articles", articleController.listAll);

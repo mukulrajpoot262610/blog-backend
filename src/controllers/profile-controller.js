@@ -9,7 +9,7 @@ class ProfileController {
         try {
             const { user } = req;
             console.log(user._id);
-            const { avatar, github, linkedin, about } = req.body;
+            const { github, linkedin, about } = req.body;
             let profile = await profileService.getProfile({ user: user._id });
             if (!profile) {
                 return APIResponse.notFoundResponse(res, "user not found");
@@ -20,7 +20,6 @@ class ProfileController {
                 {
                     github,
                     linkedin,
-                    avatar,
                     about,
                 }
             );
