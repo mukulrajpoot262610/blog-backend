@@ -91,9 +91,11 @@ router.put(
 
 // ARTICLE
 router.get("/api/articles", articleController.listAll);
+router.get("/api/most-liked-articles", articleController.listAllWithLikes);
 router.post("/api/articles", authenticate, articleController.createOne);
 router.get("/api/articles/:slug", articleController.listOne);
 router.put("/api/articles/:id", authenticate, articleController.updateOne);
+router.get("/api/articles/like/:id", authenticate, articleController.like);
 router.delete("/api/articles/:id", authenticate, articleController.deleteOne);
 
 // PROFILE

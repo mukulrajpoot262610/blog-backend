@@ -19,6 +19,23 @@ class ArticleController {
         }
     }
 
+    async listAllWithLikes(req, res) {
+        try {
+            const articles = await ArticleModel.find()
+                .limit(20)
+                .populate("author")
+                .sort("-likes");
+            return APIResponse.successResponseWithData(
+                res,
+                articles,
+                "success"
+            );
+        } catch (err) {
+            console.log(err);
+            return APIResponse.errorResponse(res);
+        }
+    }
+
     async listOne(req, res) {
         try {
             const { slug } = req.params;
@@ -27,6 +44,28 @@ class ArticleController {
                 .populate("author")
                 .sort("-createdAt");
             return APIResponse.successResponseWithData(res, data, "success");
+        } catch (err) {
+            console.log(err);
+            return APIResponse.errorResponse(res);
+        }
+    }
+
+    async like(req, res) {
+        try {
+            const { id: articleId } = req.params;
+            const article = await ArticleModel.findById({ _id: articleId });
+            const data = await ArticleModel.findByIdAndUpdate(
+                { _id: articleId },
+                {
+                    likes: article.likes + 1,
+                },
+                { new: true }
+            );
+            return APIResponse.successResponseWithData(
+                res,
+                data.likes,
+                "success"
+            );
         } catch (err) {
             console.log(err);
             return APIResponse.errorResponse(res);

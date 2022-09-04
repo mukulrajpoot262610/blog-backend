@@ -12,6 +12,7 @@ const articleSchema = new mongoose.Schema(
         content: { type: String },
         cover: { type: String },
         subtitle: { type: String },
+        likes: { type: Number, default: 0 },
     },
     {
         timestamps: true,
