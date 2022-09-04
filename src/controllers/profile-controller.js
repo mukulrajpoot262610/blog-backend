@@ -25,6 +25,7 @@ class ProfileController {
                 }
             );
 
+            profile.password = "";
             return APIResponse.successResponseWithData(res, profile);
         } catch (err) {
             console.log(err);

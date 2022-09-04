@@ -6,6 +6,7 @@ class ArticleController {
         try {
             const articles = await ArticleModel.find()
                 .limit(20)
+                .populate("author")
                 .sort("-createdAt");
             return APIResponse.successResponseWithData(
                 res,
