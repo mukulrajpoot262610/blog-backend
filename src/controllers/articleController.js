@@ -2,6 +2,27 @@ import APIResponse from "../helpers/APIResponse";
 import ArticleModel from "../models/article-model";
 
 class ArticleController {
+    async search(req, res) {
+        try {
+            const { title } = req.body;
+            const regex = new RegExp(title, "i");
+            const articles = await ArticleModel.find({
+                title: { $regex: regex },
+            })
+                .limit(20)
+                .populate("author")
+                .sort("-createdAt");
+            return APIResponse.successResponseWithData(
+                res,
+                articles,
+                "success"
+            );
+        } catch (err) {
+            console.log(err);
+            return APIResponse.errorResponse(res);
+        }
+    }
+
     async listAll(req, res) {
         try {
             const articles = await ArticleModel.find()
